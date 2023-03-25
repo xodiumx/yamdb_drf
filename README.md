@@ -94,12 +94,12 @@ cd infra/
 docker-compose up -d --build
 ~~~
 - Будет создано 3 контейнера `db`, `web`, `nginx`
-- В контейнере `web` выполните следующие команды: 
+- В контейнере `web` выполните следующую команду: 
 ~~~
-python3 manage.py makemigrations --force-color -v 3 
-python3 manage.py migrate --force-color -v 3 
-python3 manage.py collectstatic
-python3 manage.py loaddata fixtures.json
+python3 manage.py makemigrations --force-color -v 3 \
+&& python3 manage.py migrate --force-color -v 3 \
+&& python3 manage.py collectstatic \
+&& python3 manage.py loaddata fixtures.json
 ~~~
 - superuser - `admin:admin`
 
