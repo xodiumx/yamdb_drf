@@ -1,11 +1,16 @@
+import os
+
 from datetime import timedelta
 from pathlib import Path
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p&l%385148kslhtyn^##a1)ilz@4zqj=rq&agdol^##zgl9(vs'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -65,8 +70,12 @@ WSGI_APPLICATION = 'api_yamdb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT')
     }
 }
 
@@ -158,9 +167,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = ((BASE_DIR / 'static/'),)
+# Media files
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -179,8 +191,8 @@ SWAGGER_SETTINGS = {
 # SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'yamdb17@gmail.com'
-EMAIL_HOST_PASSWORD = 'ovnptlixrkrgdswc'
-EMAIL_PORT = 587
+EMAIL_USE_TLS= os.getenv('EMAIL_USE_TLS')
+EMAIL_HOST= os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER= os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD= os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT= os.getenv('EMAIL_PORT')
