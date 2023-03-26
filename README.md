@@ -39,41 +39,71 @@
   - Добавлять комментарии к отзывам
 
 ## Установка
-
-#### Для запуска приложения в dev-режиме проделайте следующие шаги:
 1) Склонируйте репозиторий.
-
 2) Перейдите в папку с кодом и создайте виртуальное окружение:
 ~~~
 python -m venv venv
 ~~~
-
 3) Активируйте виртуальное окружение:
 ~~~
-source venv\scripts\activate
+source venv\Scripts\activate
 ~~~
-
 4) Установите зависимости:
 ~~~
 python -m pip install -r requirements.txt
 ~~~
+5) Заполните environment variables пример:
+   - В директории `infra/` создайте файл `.env` и заполните его, пример:
+   ~~~
+   SECRET_KEY = 'p&l%385148kslhtyn^##a1)ilz@4zqj=rq&agdol^##zgl9(vs'
 
-5) Выполните миграции:
+   DB_ENGINE=django.db.backends.postgresql
+   DB_NAME=postgres
+   POSTGRES_USER=postgres
+   POSTGRES_PASSWORD=postgres
+   DB_HOST=db
+   DB_PORT=5432
+   
+   EMAIL_USE_TLS=True
+   EMAIL_HOST='smtp.gmail.com'
+   EMAIL_HOST_USER='yamdb17@gmail.com'
+   EMAIL_HOST_PASSWORD='ovnptlixrkrgdswc'
+   EMAIL_PORT=587
+   ~~~ 
+6) Выполните миграции:
 ~~~
 python manage.py migrate
 ~~~
-
-6) Создайте суперпользователя:
+7) Загрузите данные в бд:
 ~~~
-python manage.py createsuperuser
+python3 manage.py loaddata fixtures.json
 ~~~
-
-7) Запустите сервер:
+8) Запустите сервер:
 ~~~
 python manage.py runserver
 ~~~
 
-### Загрузка данных из csv в БД
+## Либо разверните проект через `docker`:
+- перейдите в директорию `infra`
+~~~
+cd infra/
+~~~
+- создайте и заполните `.env` файл см. 5 пункт выше.
+- запустите команду:
+~~~
+docker-compose up -d --build
+~~~
+- Будет создано 3 контейнера `db`, `web`, `nginx`
+- В контейнере `web` выполните следующую команду: 
+~~~
+python3 manage.py makemigrations --force-color -v 3 \
+&& python3 manage.py migrate --force-color -v 3 \
+&& python3 manage.py collectstatic \
+&& python3 manage.py loaddata fixtures.json
+~~~
+- superuser - `admin:admin`
+
+## Загрузка данных из csv в БД
 
 Чтобы загрузить таблицы из csv в базу данных:
 ~~~
@@ -85,7 +115,7 @@ python manage.py import_data --load
 python manage.py import_data --delete
 ~~~
 
-### Пользовательские роли
+## Пользовательские роли
 - ***Аноним*** — может просматривать описания произведений, читать отзывы и комментарии.
 
 - ***Аутентифицированный пользователь (user)*** — может, как и Аноним, читать всё, дополнительно он может публиковать отзывы и ставить оценку произведениям (фильмам/книгам/песенкам), может комментировать чужие отзывы; может редактировать и удалять свои отзывы и комментарии. Эта роль присваивается по умолчанию каждому новому пользователю.
