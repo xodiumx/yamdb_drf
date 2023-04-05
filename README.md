@@ -1,6 +1,6 @@
 # Project Yamdb
 
-![](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
+![](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray) ![](https://github.com/xodiumx/yamdb_drf/actions/workflows/yamdb_workflow.yml/badge.svg)
 
 ## Authors
 
@@ -193,6 +193,7 @@ POST /api/v1//titles/{title_id}/reviews/{review_id}/comments/
 }
 ~~~
 ---
+#### [IP для проверки](http://158.160.34.199)
 #### Более подробная документация доступна по эндпоинту /redoc/
 
 #### [Original repo](https://github.com/ShivaZoid/api_yamdb)

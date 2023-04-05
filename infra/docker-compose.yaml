@@ -9,8 +9,7 @@ services:
       - ./.env
 
   web:
-    build: ../api_yamdb
-    image: yamdb
+    image: oxdium/yamdb:latest
     container_name: 'web'
     restart: always
     depends_on:

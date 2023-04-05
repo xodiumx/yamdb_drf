@@ -1,19 +1,18 @@
 import os
-
 from datetime import timedelta
 from pathlib import Path
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'adsda231dsada212sasad312FF^QD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -70,12 +69,12 @@ WSGI_APPLICATION = 'api_yamdb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT')
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.getenv('DB_NAME', 'postgres'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
+        'HOST': os.getenv('DB_HOST', 'db'),
+        'PORT': os.getenv('DB_PORT', '5432')
     }
 }
 
@@ -172,7 +171,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Media files
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -191,8 +190,8 @@ SWAGGER_SETTINGS = {
 # SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_USE_TLS= os.getenv('EMAIL_USE_TLS')
-EMAIL_HOST= os.getenv('EMAIL_HOST')
-EMAIL_HOST_USER= os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD= os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_PORT= os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
