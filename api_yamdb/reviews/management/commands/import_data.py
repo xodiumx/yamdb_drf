@@ -4,8 +4,7 @@ import os
 import django.db.utils
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
-
-from reviews.models import Title, Category, Genre, Review, Comment
+from reviews.models import Category, Comment, Genre, Review, Title
 from users.models import User
 
 DATA_TABLES = {
@@ -34,12 +33,8 @@ def get_list_fields_model(model):
     Принимает объект модели, и возвращает словарь с полями в виде:
     {<поле модели>: <поле в таблице>}.
     """
-
     fields_obj_list = model._meta.fields
-    fields = {
-        field.name: field.attname for field in fields_obj_list
-    }
-    return fields
+    return {field.name: field.attname for field in fields_obj_list}
 
 
 def changes_fields(fields_model, table):

@@ -3,18 +3,10 @@ from re import match
 from django.contrib.auth.tokens import default_token_generator
 from django.db.utils import IntegrityError
 from django.shortcuts import get_object_or_404
-from rest_framework.serializers import (
-    ModelSerializer,
-    Serializer,
-    CharField,
-    EmailField
-)
+from rest_framework.serializers import (CharField, EmailField, ModelSerializer,
+                                        Serializer)
 
-from .exceptions import (
-    UserFound,
-    WrongData,
-    NotValidUserName,
-)
+from .exceptions import NotValidUserName, UserFound, WrongData
 from .models import User
 from .utils import get_tokens_for_user, send_confirm_code
 
@@ -85,8 +77,6 @@ class ReceiveJWTSerializer(Serializer):
         confirmation_code = data['confirmation_code']
         user = get_object_or_404(User, username=username)
 
-        if default_token_generator.check_token(user, confirmation_code):
-            tokens = get_tokens_for_user(user)
-            return {'tokens': tokens}
-        else:
+        if not default_token_generator.check_token(user, confirmation_code):
             raise WrongData('Введены не правильные данные или токен истек')
+        return {'tokens': get_tokens_for_user(user)}
