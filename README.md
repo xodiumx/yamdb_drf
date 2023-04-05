@@ -193,7 +193,7 @@ POST /api/v1//titles/{title_id}/reviews/{review_id}/comments/
 }
 ~~~
 ---
-#### [IP для проверки](http://158.160.34.199)
+#### [IP для проверки](http://158.160.62.206/swagger/)
 #### Более подробная документация доступна по эндпоинту /redoc/
 
 #### [Original repo](https://github.com/ShivaZoid/api_yamdb)
